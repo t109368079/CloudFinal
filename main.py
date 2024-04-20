@@ -13,7 +13,7 @@ import plotly.io as pio
 import plotly.express as px
 import plotly.graph_objects as go
 
-
+from PIL import Image
 from matplotlib import pyplot as plt
 from sklearn.tree import plot_tree
 from sklearn.preprocessing import LabelEncoder as le
@@ -258,25 +258,11 @@ if 'login' in st.session_state.keys():
         
 #%% Q7 Machine learning method 
     st.header("Extra, ML method for factor affect customer engagement")
-    regr = rfr(max_depth=3, random_state=72)
-    feature_col = list(household_encoded_df.columns)
-    feature_col = feature_col[:-2]
-    feature = household_encoded_df[feature_col]
-    label = household_encoded_df['total_spend']
-    
-    # Change columns name 因為有智障不知道怎麼搞得把col name打了一堆空格，幹
-    ori_col = list(feature.columns)
-    new_col = [each.replace(' ', '') for each in ori_col]
-    feature.columns = new_col
-    
-    regr.fit(feature, label)
-    
+        
     # Plot tree
-    estimator = regr.estimators_[0]
-    fig = plt.figure(figsize=(10,6))
-    plot_tree(estimator, feature_names=feature.columns, class_names=label.name, filled=True)
-    
-    st.pyplot(fig)
+    tree = Image.open('./Data/tree.png')
+    tree = np.array(tree)
+    st.image(tree)
     
     # Explaination
     st.text_area("Ans for Extra", "According to the random forest analysis, the tree initially divides based on the attribute L"+ 
